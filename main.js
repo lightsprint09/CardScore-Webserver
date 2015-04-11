@@ -7,6 +7,7 @@ var url = require("url");
 var StartScreen = React.createFactory(require("./view/StartScreenView.js"));
 var GameView = React.createFactory(require("./view/GameView.js"));
 var GameManager = require("./model/GameModel.js")();
+var GameNotifier = require("./model/GameNotifier.js");
 
 var app = express();
 app.use("/", express.static(path.dirname(require.main.filename) + '',
@@ -22,6 +23,7 @@ app.get('/game', game);
 app.get("/gameObject", getGameObject);
 app.post("/addPoints", addPoints)
 var server = http.Server(app);
+var gameNotifier = GameNotifier(server);
 
 var port = process.env.PORT || 8888;
 server.listen(port, function() {
@@ -42,6 +44,7 @@ function startGame(req, res) {
 	var game = GameManager.createGame();
 	var player = game.addPlayer(username);
 	res.redirect("/game?id=" + game.name + "&playerID=" + player.id);
+	gameNotifier.addGameNotification(game.name);
 }
 
 function addPlayer(req, res) {
@@ -63,7 +66,8 @@ function addPoints(req, res) {
 	var points = req.body.points;
 	var game = GameManager.getGame(gameID);
 	game.players[playerID].points.push(points);
-	res.send();
+	res.send(game);
+	gameNotifier.notifyGame(game);
 }
 
 function game(req, res) {

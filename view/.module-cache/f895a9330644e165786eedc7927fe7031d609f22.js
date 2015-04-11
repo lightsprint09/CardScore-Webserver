@@ -23,7 +23,7 @@ var GameView = React.createClass({displayName: "GameView",
 		return (
 			React.createElement("div", {className: "player-row"}, 
 			React.createElement("h3", null, this.props.player.name + " - Punkte: " + this.props.player.points.reduce(function(a, b){return a * 1 + b  * 1}, 0)), 
-			React.createElement("input", {type: "text", onChange: this.onChangePoints, placeholder: "Neue Punkte"}), 
+			React.createElement("input", {type: "text", value: this.state.points, onChange: this.onChangePoints, placeholder: "Neue Punkte"}), 
 			React.createElement("input", {type: "button", onClick: this.onSubmitPoints, value: "Eintragen"}), 
 			React.createElement("ul", null, pointList)
 			)
