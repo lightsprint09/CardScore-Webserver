@@ -12,10 +12,10 @@ var GameView = React.createClass({displayName: "GameView",
 	onSubmitPoints: function() {
 		GamerService.addPoints(this.props.gameID, this.props.player.id, this.state.points, didSendPoints);
 		var self = this;
-		function didSendPoints(err, result) {
-			console.log(arguments);
-			//self.state.points = "";
-			self.props.reload();	
+		function didSendPoints(err, player) {
+			console.log(player);
+			self.props.player = player;
+			self.forceUpdate();	
 		}
 	},
 	render: function() {

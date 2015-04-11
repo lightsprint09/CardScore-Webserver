@@ -34,7 +34,12 @@ function addPoints(gameID, playerID, points, callback) {
 		playerID: playerID,
 		points: points
 	};
-	request.performPostRequest("/addPoints", data, callback);
+	request.performPostRequest("/addPoints", data, didSubmitPoints);
+	
+	function didSubmitPoints(err, result) {
+		var game = JSON.parse(result);
+		callback(err, game);
+	}
 }
 
 function createGame(username) {
@@ -26816,19 +26821,16 @@ var SocketClient = require("socket.io-client");
 
 var GameView = React.createClass({displayName: "GameView",
 	getInitialState: function() {
-/*
-		console.log("///" + this.props.game.name, SocketClient, SocketClient.connect);
-
-		var socket = SocketClient.connect("///" + this.props.game.name);
-		console.log(socket);
-*/
-
-		//socket.on("update", this.updateGame);
+		if(!this.props.server) {
+			var socket = SocketClient.connect("///" + this.props.game.name);
+			socket.on("update", this.updateGame);
+		}
+		
     	return {socket: null};
   	},
   	updateGame: function(game) {
-	  	console.log(game);
-	  	this.props.game = game;	
+	  	this.props.game = game;
+	  	this.forceUpdate();
   	},
 	render: function() {
 		var players = []
@@ -26864,10 +26866,10 @@ var GameView = React.createClass({displayName: "GameView",
 	onSubmitPoints: function() {
 		GamerService.addPoints(this.props.gameID, this.props.player.id, this.state.points, didSendPoints);
 		var self = this;
-		function didSendPoints(err, result) {
-			console.log(arguments);
-			//self.state.points = "";
-			self.props.reload();	
+		function didSendPoints(err, player) {
+			console.log(player);
+			self.props.player = player;
+			self.forceUpdate();	
 		}
 	},
 	render: function() {

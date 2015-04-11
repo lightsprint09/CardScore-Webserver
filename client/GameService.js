@@ -17,7 +17,12 @@ function addPoints(gameID, playerID, points, callback) {
 		playerID: playerID,
 		points: points
 	};
-	request.performPostRequest("/addPoints", data, callback);
+	request.performPostRequest("/addPoints", data, didSubmitPoints);
+	
+	function didSubmitPoints(err, result) {
+		var game = JSON.parse(result);
+		callback(err, game);
+	}
 }
 
 function createGame(username) {

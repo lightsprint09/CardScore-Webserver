@@ -5,19 +5,16 @@ var SocketClient = require("socket.io-client");
 
 var GameView = React.createClass({displayName: "GameView",
 	getInitialState: function() {
-/*
-		console.log("///" + this.props.game.name, SocketClient, SocketClient.connect);
-
-		var socket = SocketClient.connect("///" + this.props.game.name);
-		console.log(socket);
-*/
-
-		//socket.on("update", this.updateGame);
+		if(!this.props.server) {
+			var socket = SocketClient.connect("///" + this.props.game.name);
+			socket.on("update", this.updateGame);
+		}
+		
     	return {socket: null};
   	},
   	updateGame: function(game) {
-	  	console.log(game);
-	  	this.props.game = game;	
+	  	this.props.game = game;
+	  	this.forceUpdate();
   	},
 	render: function() {
 		var players = []

@@ -48,7 +48,6 @@ function startGame(req, res) {
 }
 
 function addPlayer(req, res) {
-	console.log(url.parse(req.url, true).query);
 	var username = url.parse(req.url, true).query.username;
 	var gameID = url.parse(req.url, true).query.gameID;
 	if(!username || !gameID) {
@@ -58,6 +57,7 @@ function addPlayer(req, res) {
 	var game = GameManager.getGame(gameID);
 	var player = game.addPlayer(username);
 	res.redirect("/game?id=" + game.name + "&playerID=" + player.id);
+	gameNotifier.notifyGame(game);
 }
 
 function addPoints(req, res) {
@@ -66,14 +66,14 @@ function addPoints(req, res) {
 	var points = req.body.points;
 	var game = GameManager.getGame(gameID);
 	game.players[playerID].points.push(points);
-	res.send(game);
+	res.send(game.players[playerID]);
 	gameNotifier.notifyGame(game);
 }
 
 function game(req, res) {
 	var gameID = url.parse(req.url, true).query.id;
 	var game = GameManager.getGame(gameID);
-	var reactHtml = React.renderToString(GameView({game: game}));
+	var reactHtml = React.renderToString(GameView({game: game, server: true}));
 	res.render('Game.ejs', {reactOutput: reactHtml, title: gameID});
 }
 
