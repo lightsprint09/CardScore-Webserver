@@ -80,3 +80,7 @@ function getGameObject(req, res) {
 	res.send(game);
 }
 
+function scorePage(req, res) {
+	
+}
+

@@ -4,7 +4,7 @@ var GamerService = require("../client/GameService.js");
 
 var GameView = React.createClass({
 	getInitialState: function() {
-    	return {points: 0};
+    	return {points: 0, emptyValue: ""};
   	},
   	onChangePoints: function(event) {
 		this.state.points = event.target.value;
@@ -13,8 +13,7 @@ var GameView = React.createClass({
 		GamerService.addPoints(this.props.gameID, this.props.player.id, this.state.points, didSendPoints);
 		var self = this;
 		function didSendPoints(err, result) {
-			self.props.reload();
-			
+			self.props.reload();	
 		}
 	},
 	render: function() {
@@ -22,7 +21,7 @@ var GameView = React.createClass({
 		return (
 			<div className="player-row">
 			<h3>{this.props.player.name + " - Punkte: " + this.props.player.points.reduce(function(a, b){return a * 1 + b  * 1}, 0)}</h3>
-			<input type="text" onChange= {this.onChangePoints} placeholder="Neue Punkte"/>
+			<input type="text" value={this.state.emptyValue} onChange={this.onChangePoints} placeholder="Neue Punkte"/>
 			<input type="button" onClick= {this.onSubmitPoints} value="Eintragen"/>
 			<ul>{pointList}</ul>
 			</div>
