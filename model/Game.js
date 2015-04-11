@@ -26,9 +26,21 @@ module.exports = function(name_) {
 		return name;
 	}
 	
+	function addPoints(playerID, points) {
+		var player = players[playerID];
+		if(player.points[player.points.length - 1] + points == 0) {
+			player.points.pop();
+		}else {
+			player.points.push(points);
+		}
+		
+		return player;
+	}
+	
 	return {
 		addPlayer: addPlayer,
 		name: name,
-		players: players
+		players: players,
+		addPoints: addPoints
 	};
 }

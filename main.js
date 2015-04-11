@@ -63,10 +63,10 @@ function addPlayer(req, res) {
 function addPoints(req, res) {
 	var gameID = req.body.id;
 	var playerID = req.body.playerID;
-	var points = req.body.points;
+	var points = req.body.points * 1;
 	var game = GameManager.getGame(gameID);
-	game.players[playerID].points.push(points);
-	res.send(game.players[playerID]);
+	var player = game.addPoints(playerID, points);
+	res.send(player);
 	gameNotifier.notifyGame(game);
 }
 

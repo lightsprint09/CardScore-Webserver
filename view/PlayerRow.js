@@ -7,14 +7,14 @@ var GameView = React.createClass({displayName: "GameView",
     	return {points: ""};
   	},
   	onChangePoints: function(event) {
-		this.state.points = event.target.value;
+		this.setState({points: event.target.value});
 	},
 	onSubmitPoints: function() {
 		GamerService.addPoints(this.props.gameID, this.props.player.id, this.state.points, didSendPoints);
 		var self = this;
 		function didSendPoints(err, player) {
-			console.log(player);
 			self.props.player = player;
+			self.state.points = "";
 			self.forceUpdate();	
 		}
 	},
@@ -23,8 +23,9 @@ var GameView = React.createClass({displayName: "GameView",
 		return (
 			React.createElement("div", {className: "player-row"}, 
 			React.createElement("h3", null, this.props.player.name + " - Punkte: " + this.props.player.points.reduce(function(a, b){return a * 1 + b  * 1}, 0)), 
-			React.createElement("input", {type: "text", onChange: this.onChangePoints, placeholder: "Neue Punkte"}), 
 			React.createElement("input", {type: "button", onClick: this.onSubmitPoints, value: "Eintragen"}), 
+			React.createElement("input", {type: "number", value: this.state.points, onChange: this.onChangePoints, placeholder: "Neue Punkte"}), 
+			
 			React.createElement("ul", null, pointList)
 			)
 		)
