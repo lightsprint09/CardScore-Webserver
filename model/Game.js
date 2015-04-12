@@ -8,14 +8,11 @@ module.exports = function(name_) {
 		var player = {
 			name: name,
 			id: id,
-			points: []
+			points: [],
+			pointsAll: 0
 		};
 		players[id] = player;
 		return player;
-	}
-	
-	function addPoints(playerID, points) {
-		players[playerID].points.push(points);
 	}
 	
 	function getScore() {
@@ -28,13 +25,22 @@ module.exports = function(name_) {
 	
 	function addPoints(playerID, points) {
 		var player = players[playerID];
-		if(player.points[player.points.length - 1] + points == 0) {
+		if(shouldDeletePoints(player, points)) {
 			player.points.pop();
 		}else {
 			player.points.push(points);
 		}
+		player.pointsAll = player.points.reduce(function(a, b){return a  + b}, 0);
 		
 		return player;
+	}
+	
+	function shouldDeletePoints(player, points) {
+		var pointList = player.points;
+		var pointListLength = pointList.length;
+		var lastPoints = pointList[pointListLength - 1];
+		
+		return lastPoints + points == 0 && lastPoints;
 	}
 	
 	return {
