@@ -11,7 +11,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var buffer = require('vinyl-buffer');
 
 
-var rootFiles = [{file: './client/SartScreen.js', outFile:"SartScreen.js", outDir: "./client/build/"}, {file: './client/GameMain.js', outFile:"GameMain.js", outDir: "./client/build/"}];
+var rootFiles = [{file: './client/SartScreen.js', outFile:"SartScreen.js", outDir: "./client/build/"}, {file: './client/GameMain.js', outFile:"GameMain.js", outDir: "./client/build/"}, {file: './client/ScoreBoard.js', outFile:"ScoreBoard.js", outDir: "./client/build/"}];
 
 gulp.task('watch', getBundleAll(true));
 

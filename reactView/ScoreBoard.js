@@ -2,6 +2,24 @@
 var React = require('react');
 var PlayerRow = require("./PlayerRow.js");
 var SocketClient = require("socket.io-client");
+var ChartistGraph = require('react-chartist');
+
+
+var Chart = React.createClass({
+	render: function() {
+		console.log(this.props.game)
+		var simpleLineChartData = {
+			  labels: ['Monday', 'Tuesday'],
+			  series: [
+			    [12, 9]]
+			}
+     return(
+    	<div>
+        <ChartistGraph data={simpleLineChartData} type={'.ct-chart'} />
+		</div>)
+		
+	}
+});
 
 var ScoreBoard = React.createClass({
 	getInitialState: function() {
@@ -32,13 +50,15 @@ var ScoreBoard = React.createClass({
 		var i;
 		for(i = 0; i < length; i++) {
 			var player = players[i];
-			players.push(<li><div>player.name</div><div>player.pointsAll</div></li>)
+			playersDOM.push(<li><div>{player.name}</div><div>{player.pointsAll}</div></li>)
 		}
 		
 		return (
 			<div className="game-view">
 				<h2>{"Spiel: " + this.props.game.name}</h2>
 				{playersDOM}
+				<Chart game={ this.props.game}/>
+				<a href={"/game?id=" + this.props.game.name}>Spiel</a>
 			</div>
 		)
 		

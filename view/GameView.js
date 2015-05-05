@@ -25,7 +25,8 @@ var GameView = React.createClass({displayName: "GameView",
 		return (
 			React.createElement("div", {className: "game-view"}, 
 				React.createElement("h2", null, "Spiel: " + this.props.game.name), 
-				players
+				players, 
+				React.createElement("a", {href: "/scoreboard?id=" + this.props.game.name}, "Scoreboard")
 			)
 		)
 		

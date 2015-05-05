@@ -6,6 +6,7 @@ var path = require("path");
 var url = require("url");
 var StartScreen = React.createFactory(require("./view/StartScreenView.js"));
 var GameView = React.createFactory(require("./view/GameView.js"));
+var ScoreView = React.createFactory(require("./view/ScoreBoard.js"));
 var GameManager = require("./model/GameModel.js")();
 var GameNotifier = require("./model/GameNotifier.js");
 
@@ -20,8 +21,10 @@ app.get('/', start);
 app.get('/startGame', startGame);
 app.get('/addPlayer', addPlayer);
 app.get('/game', game);
+app.get('/scoreboard', scorePage);
 app.get("/gameObject", getGameObject);
-app.post("/addPoints", addPoints)
+app.post("/addPoints", addPoints);
+
 var server = http.Server(app);
 var gameNotifier = GameNotifier(server);
 
@@ -85,6 +88,9 @@ function getGameObject(req, res) {
 }
 
 function scorePage(req, res) {
-	
+	var gameID = url.parse(req.url, true).query.id;
+	var game = GameManager.getGame(gameID);
+	var reactHtml = React.renderToString(ScoreView({game: game, server: true}));
+	res.render('Scoreboard.ejs', {reactOutput: reactHtml, title: gameID});
 }
 
