@@ -1,0 +1,15 @@
+.scoreboard-view li {
+	list-style: none;
+	width: 100%;
+	margin-top: 15px;
+	
+}
+
+.scoreboard-view li div {
+	text-align: center;
+	font-size: 40px;
+}
+
+.score-point {
+	font-weight: bold;
+}

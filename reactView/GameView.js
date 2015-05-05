@@ -26,7 +26,7 @@ var GameView = React.createClass({
 			<div className="game-view">
 				<h2>{"Spiel: " + this.props.game.name}</h2>
 				{players}
-				<a href={"/scoreboard?id=" + this.props.game.name}>Scoreboard</a>
+				<a className="game-reference" href={"/scoreboard?id=" + this.props.game.name}>zum Scoreboard</a>
 			</div>
 		)
 		

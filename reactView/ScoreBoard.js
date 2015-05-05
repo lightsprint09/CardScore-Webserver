@@ -2,24 +2,6 @@
 var React = require('react');
 var PlayerRow = require("./PlayerRow.js");
 var SocketClient = require("socket.io-client");
-var ChartistGraph = require('react-chartist');
-
-
-var Chart = React.createClass({
-	render: function() {
-		console.log(this.props.game)
-		var simpleLineChartData = {
-			  labels: ['Monday', 'Tuesday'],
-			  series: [
-			    [12, 9]]
-			}
-     return(
-    	<div>
-        <ChartistGraph data={simpleLineChartData} type={'.ct-chart'} />
-		</div>)
-		
-	}
-});
 
 var ScoreBoard = React.createClass({
 	getInitialState: function() {
@@ -45,25 +27,32 @@ var ScoreBoard = React.createClass({
   	},
 	render: function() {
 		var playersDOM = []
-		var players = this.players();
+		var players = this.players().sort(sortPlayers);
 		var length = players.length;
 		var i;
 		for(i = 0; i < length; i++) {
 			var player = players[i];
-			playersDOM.push(<li><div>{player.name}</div><div>{player.pointsAll}</div></li>)
+			if(i == 0) {
+				player.name += " 🌟";
+			}
+			playersDOM.push(<li>
+			<div>{(i + 1) + ". " + player.name}</div>
+			<div className="score-point">{player.pointsAll}</div></li>)
 		}
 		
 		return (
-			<div className="game-view">
+			<div className="scoreboard-view">
 				<h2>{"Spiel: " + this.props.game.name}</h2>
 				{playersDOM}
-				<Chart game={ this.props.game}/>
-				<a href={"/game?id=" + this.props.game.name}>Spiel</a>
+				<a className="game-reference" href={"/game?id=" + this.props.game.name}>zum Spiel</a>
 			</div>
 		)
-		
 	}
 });
+
+function sortPlayers(a, b) {
+		return a.pointsAll - b.pointsAll;
+	}
 
 
 module.exports = ScoreBoard;
