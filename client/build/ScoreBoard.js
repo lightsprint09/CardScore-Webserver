@@ -28335,11 +28335,10 @@ var ScoreBoard = React.createClass({displayName: "ScoreBoard",
 		var i;
 		for(i = 0; i < length; i++) {
 			var player = players[i];
-			if(i == 0) {
-				player.name += " 🌟";
-			}
+			var extenedIcon = i == 0 ? " 🌟" : "";
+			
 			playersDOM.push(React.createElement("li", null, 
-			React.createElement("div", null, (i + 1) + ". " + player.name), 
+			React.createElement("div", null, (i + 1) + ". " + player.name + extenedIcon), 
 			React.createElement("div", {className: "score-point"}, player.pointsAll)))
 		}
 		

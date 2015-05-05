@@ -32,11 +32,10 @@ var ScoreBoard = React.createClass({
 		var i;
 		for(i = 0; i < length; i++) {
 			var player = players[i];
-			if(i == 0) {
-				player.name += " 🌟";
-			}
+			var extenedIcon = i == 0 ? " 🌟" : "";
+			
 			playersDOM.push(<li>
-			<div>{(i + 1) + ". " + player.name}</div>
+			<div>{(i + 1) + ". " + player.name + extenedIcon}</div>
 			<div className="score-point">{player.pointsAll}</div></li>)
 		}
 		
