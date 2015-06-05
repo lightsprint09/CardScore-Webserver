@@ -15,3 +15,11 @@ body {
 .score-point {
 	font-weight: bold;
 }
+
+.game-reference {
+	color: #354D6C;
+	display: block;
+	text-align: center;
+	margin: auto;
+	margin-top: 40px;
+}
