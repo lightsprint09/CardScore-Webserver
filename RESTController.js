@@ -2,7 +2,7 @@ var url = require("url");
 
 module.exports = function() {
 	
-	function Controller(app, gameNotifier, GameManager) {
+	function Controller(app, gameNotifier, gameManager) {
 		registerPath(app);
 		function registerPath(app) {
 			app.post("/startGame", startGame);
@@ -18,7 +18,7 @@ module.exports = function() {
 				res.send({})
 			}
 			
-			var game = GameManager.createGame();
+			var game = gameManager.createGame();
 			var player = game.addPlayer(username);
 			gameNotifier.addGameNotification(game.name);
 			res.send(game);
@@ -28,7 +28,7 @@ module.exports = function() {
 			var username = url.parse(req.url, true).query.username;
 			var gameID = url.parse(req.url, true).query.gameID;
 			
-			var game = GameManager.getGame(gameID);
+			var game = gameManager.getGame(gameID);
 			var player = game.addPlayer(username);
 			res.send(game);
 			gameNotifier.notifyGame(game);

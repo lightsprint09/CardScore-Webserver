@@ -10,6 +10,7 @@ module.exports = function(server) {
 	}
 	
 	function notifyGame(game) {
+		console.log(sockets[game.name].emit);
 		sockets[game.name].emit("update", game);
 	}
 	

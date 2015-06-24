@@ -32,6 +32,7 @@ function joinGame(username, gameName) {
 function registerForGameUpdate(name, callback) {
 	var socket = SocketClient.connect("///" + name);
 	socket.on("update", callback);
+	socket.on("connect", function() { console.log(arguments)});
 }
 
 function addPoints(gameID, playerID, points, callback) {
@@ -28278,7 +28279,9 @@ var gameService = require("../client/GameService.js");
 var GameView = React.createClass({displayName: "GameView",
 	getInitialState: function() {
 		if(!this.props.server) {
-			gameService.registerForGameUpdate(this.updateGame);
+			var name = this.props.game.name;
+			gameService.registerForGameUpdate(name, 
+				this.updateGame);
 		}
 		
     	return {};

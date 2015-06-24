@@ -22,6 +22,7 @@ function joinGame(username, gameName) {
 function registerForGameUpdate(name, callback) {
 	var socket = SocketClient.connect("///" + name);
 	socket.on("update", callback);
+	socket.on("connect", function() { console.log(arguments)});
 }
 
 function addPoints(gameID, playerID, points, callback) {
