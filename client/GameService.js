@@ -1,14 +1,21 @@
 var request = require("./RequestHandler.js");
+var SocketClient = require("socket.io-client");
 
 module.exports = {
 		joinGame: joinGame,
 		createGame: createGame,
 		getGameObject: getGameObject,
-		addPoints: addPoints
+		addPoints: addPoints,
+		registerForGameUpdate: registerForGameUpdate
 	};	
 	
 function joinGame(username, gameName) {
 	document.location = "/addPlayer?username=" + username + "&gameID=" + gameName;
+}
+
+function registerForGameUpdate(name, callback) {
+	var socket = SocketClient.connect("///" + name);
+	socket.on("update", callback);
 }
 
 function addPoints(gameID, playerID, points, callback) {

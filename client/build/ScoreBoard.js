@@ -14,16 +14,23 @@ function gotObject(err, obj) {
 
 },{"../view/ScoreBoard.js":216,"./GameService.js":2,"react":164,"url":9}],2:[function(require,module,exports){
 var request = require("./RequestHandler.js");
+var SocketClient = require("socket.io-client");
 
 module.exports = {
 		joinGame: joinGame,
 		createGame: createGame,
 		getGameObject: getGameObject,
-		addPoints: addPoints
+		addPoints: addPoints,
+		registerForGameUpdate: registerForGameUpdate
 	};	
 	
 function joinGame(username, gameName) {
 	document.location = "/addPlayer?username=" + username + "&gameID=" + gameName;
+}
+
+function registerForGameUpdate(name, callback) {
+	var socket = SocketClient.connect("///" + name);
+	socket.on("update", callback);
 }
 
 function addPoints(gameID, playerID, points, callback) {
@@ -52,7 +59,7 @@ function getName() {
 	return name;
 }
 	 
-},{"./RequestHandler.js":3}],3:[function(require,module,exports){
+},{"./RequestHandler.js":3,"socket.io-client":165}],3:[function(require,module,exports){
 module.exports = (function() {
 	"use strict";
 		
@@ -28304,16 +28311,15 @@ module.exports = GameView;
 /** @jsx React.DOM */
 var React = require('react');
 var PlayerRow = require("./PlayerRow.js");
-var SocketClient = require("socket.io-client");
+var gameService = require("../client/GameService.js");
 
 var ScoreBoard = React.createClass({displayName: "ScoreBoard",
 	getInitialState: function() {
 		if(!this.props.server) {
-			var socket = SocketClient.connect("///" + this.props.game.name);
-			socket.on("update", this.updateGame);
+			gameService.registerForGameUpdate(this.updateGame);
 		}
 				
-    	return {socket: null};
+    	return {};
   	},
   	updateGame: function(game) {
 	  	this.props.game = game;
@@ -28359,4 +28365,4 @@ function sortPlayers(a, b) {
 
 module.exports = ScoreBoard;
 
-},{"./PlayerRow.js":215,"react":164,"socket.io-client":165}]},{},[1]);
+},{"../client/GameService.js":2,"./PlayerRow.js":215,"react":164}]},{},[1]);

@@ -1,16 +1,17 @@
 /** @jsx React.DOM */
 var React = require('react');
 var PlayerRow = require("./PlayerRow.js");
-var SocketClient = require("socket.io-client");
+var gameService = require("../client/GameService.js");
 
 var ScoreBoard = React.createClass({displayName: "ScoreBoard",
 	getInitialState: function() {
 		if(!this.props.server) {
-			var socket = SocketClient.connect("///" + this.props.game.name);
-			socket.on("update", this.updateGame);
+			var name = this.props.game.name;
+			gameService.registerForGameUpdate(name, 
+				this.updateGame);
 		}
 				
-    	return {socket: null};
+    	return {};
   	},
   	updateGame: function(game) {
 	  	this.props.game = game;
