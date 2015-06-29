@@ -3,13 +3,15 @@ var React = require('react/addons');
 var StartScreen = React.createFactory(require("./view/StartScreenView.js"));
 var GameView = React.createFactory(require("./view/GameView.js"));
 var ScoreView = React.createFactory(require("./view/ScoreBoard.js"));
+var gameMiddleware = require("./middleware/GameMiddleware.js");
 
 module.exports = function() {
 	function Controller(app, gameNotifier, gameManager) {
 		registerPath(app);
 		function registerPath(app) {
 			app.get('/', start);
-			app.get('/startGame', startGame);
+			app.get('/startGame', gameMiddleware.startGame(gameManager,
+				gameNotifier), startGame);
 			app.get('/addPlayer', addPlayer);
 			app.get('/game', game);
 			app.get('/scoreboard', scorePage);
@@ -21,15 +23,12 @@ module.exports = function() {
 		}
 		
 		function startGame(req, res) {
-			var username = url.parse(req.url, true).query.username;
-			if(!username) {
-				res.redirect("/");
+			var game = req.game;
+			var player = req.player;
+			if(!game || !player) {
+				return res.redirect("/");
 			}
-			
-			var game = gameManager.createGame();
-			var player = game.addPlayer(username);
 			res.redirect("/game?id=" + game.name + "&playerID=" + player.id);
-			gameNotifier.addGameNotification(game.name);
 		}
 		
 		function addPlayer(req, res) {
@@ -39,27 +38,39 @@ module.exports = function() {
 				return res.redirect("/");
 			}
 			
-			var game = gameManager.getGame(gameID);
-			if(!game) {
-				return res.send("Ungültiger Spielname")
+			gameManager.getGame(gameID, didGetGame);
+			function didGetGame(err, game) {
+				if(!game) {
+					return res.send("Ungültiger Spielname")
+				}
+				var player = game.addPlayer(username);
+				res.redirect("/game?id=" + game.name + "&playerID=" + player.id);
+				gameNotifier.notifyGame(game);
 			}
-			var player = game.addPlayer(username);
-			res.redirect("/game?id=" + game.name + "&playerID=" + player.id);
-			gameNotifier.notifyGame(game);
 		}
 		
 		function game(req, res) {
 			var gameID = url.parse(req.url, true).query.id;
-			var game = gameManager.getGame(gameID);
-			var reactHtml = React.renderToString(GameView({game: game, server: true}));
-			res.render('Game.ejs', {reactOutput: reactHtml, title: gameID});
+			var game = gameManager.getGame(gameID, didGetGame);
+			function didGetGame(err, game) {
+				if(!game || err) {
+					res.send("Ungültigen Spiel");
+				}
+				var reactHtml = React.renderToString(
+					GameView({game: game, server: true}));
+				res.render('Game.ejs', {reactOutput: reactHtml, title: gameID});
+			}
 		}
 		
 		function scorePage(req, res) {
 			var gameID = url.parse(req.url, true).query.id;
-			var game = gameManager.getGame(gameID);
-			var reactHtml = React.renderToString(ScoreView({game: game, server: true}));
-			res.render('Scoreboard.ejs', {reactOutput: reactHtml, title: gameID});
+			gameManager.getGame(gameID, didGetGame);
+			function didGetGame(err, game) {
+				var reactHtml = React.renderToString(
+					ScoreView({game: game, server: true}));
+				res.render('Scoreboard.ejs', {reactOutput: reactHtml, title: gameID});
+			}
+			
 		}
 	}
 	
