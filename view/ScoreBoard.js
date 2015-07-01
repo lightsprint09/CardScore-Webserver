@@ -27,8 +27,9 @@ var ScoreBoard = React.createClass({displayName: "ScoreBoard",
 		return players;
   	},
 	render: function() {
-		var playersDOM = []
+		var playersDOM = [];
 		var players = this.players().sort(sortPlayers);
+		players = this.props.game.orderAscending == "true" ? players : players.reverse();
 		var length = players.length;
 		var i;
 		for(i = 0; i < length; i++) {

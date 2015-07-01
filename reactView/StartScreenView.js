@@ -7,7 +7,8 @@ var StartScreen = React.createClass({
     	return {userName: "", gameName:""};
   	},
 	startNewGame: function(){
-		GamerService.createGame(this.state.userName);
+		var orderAscending = this.refs.isAscending.getDOMNode().checked;
+		GamerService.createGame(this.state.userName, orderAscending);
 	},
 	onChangeName: function(event) {
 		this.state.userName = event.target.value;
@@ -16,13 +17,19 @@ var StartScreen = React.createClass({
 		this.state.gameName = event.target.value;
 	},
 	enterGame: function() {
-		GamerService.joinGame(this.state.userName, this.state.gameName)
+		GamerService.joinGame(this.state.userName, this.state.gameName);
 	},
 	render: function() {
     return (
       <div className="start-screen">
       	<div className="new-game-container">
       		<input type="text" placeholder="Name" onChange={this.onChangeName}/>
+      		<div className="radio-wrapper">
+      			<input type="radio" ref="isAscending" name="myradio" value={true} defaultChecked/>
+      			<div className="radio-name">Weniger Punkte gewinnen</div>
+      			<input type="radio" name="myradio" value={false}/>
+      			<div className="radio-name">Mehr Punkte gewinnen</div>
+	  		</div>
       		<input type="button" value="Spiel starten" onClick={this.startNewGame}/>
       	</div>
       	<div className="join-game-container">

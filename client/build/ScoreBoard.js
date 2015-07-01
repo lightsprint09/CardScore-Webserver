@@ -31,7 +31,6 @@ function joinGame(username, gameName) {
 function registerForGameUpdate(name, callback) {
 	var socket = SocketClient.connect("///" + name);
 	socket.on("update", callback);
-	socket.on("connect", function() { console.log(arguments)});
 }
 
 function addPoints(gameID, playerID, points, callback) {
@@ -48,8 +47,8 @@ function addPoints(gameID, playerID, points, callback) {
 	}
 }
 
-function createGame(username) {
-	document.location = "/startGame?username=" + username;
+function createGame(username, orderAscending) {
+	document.location = "/startGame?username=" + username + "&orderAscending=" + orderAscending;
 }
 
 function getGameObject(gameID, callback) {
@@ -28338,8 +28337,9 @@ var ScoreBoard = React.createClass({displayName: "ScoreBoard",
 		return players;
   	},
 	render: function() {
-		var playersDOM = []
+		var playersDOM = [];
 		var players = this.players().sort(sortPlayers);
+		players = this.props.game.orderAscending == "true" ? players : players.reverse();
 		var length = players.length;
 		var i;
 		for(i = 0; i < length; i++) {

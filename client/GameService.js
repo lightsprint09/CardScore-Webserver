@@ -32,8 +32,8 @@ function addPoints(gameID, playerID, points, callback) {
 	}
 }
 
-function createGame(username) {
-	document.location = "/startGame?username=" + username;
+function createGame(username, orderAscending) {
+	document.location = "/startGame?username=" + username + "&orderAscending=" + orderAscending;
 }
 
 function getGameObject(gameID, callback) {
