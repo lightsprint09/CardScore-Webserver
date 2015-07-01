@@ -7,7 +7,6 @@ module.exports = function() {
 			var query = url.parse(req.url, true).query;
 			var username = query.username;
 			var orderAscending = query.orderAscending;
-			console.log(orderAscending);
 			if(!username) {
 				next()
 			}

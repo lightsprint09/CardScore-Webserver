@@ -26888,10 +26888,11 @@ var StartScreen = React.createClass({displayName: "StartScreen",
       	React.createElement("div", {className: "new-game-container"}, 
       		React.createElement("input", {type: "text", placeholder: "Name", onChange: this.onChangeName}), 
       		React.createElement("div", {className: "radio-wrapper"}, 
-      			React.createElement("input", {type: "radio", ref: "isAscending", name: "myradio", value: true, defaultChecked: true}), 
-      			React.createElement("div", {className: "radio-name"}, "Weniger Punkte gewinnen"), 
-      			React.createElement("input", {type: "radio", name: "myradio", value: false}), 
-      			React.createElement("div", {className: "radio-name"}, "Mehr Punkte gewinnen")
+      			
+      			React.createElement("div", {className: "radio-name"}, "Weniger Punkte gewinnen", 
+      			React.createElement("input", {type: "radio", ref: "isAscending", name: "myradio", value: true, defaultChecked: true})), 
+      			
+      			React.createElement("div", {className: "radio-name"}, "Mehr Punkte gewinnen ", React.createElement("input", {type: "radio", name: "myradio", value: false}))
 	  		), 
       		React.createElement("input", {type: "button", value: "Spiel starten", onClick: this.startNewGame})
       	), 

@@ -25,10 +25,11 @@ var StartScreen = React.createClass({
       	<div className="new-game-container">
       		<input type="text" placeholder="Name" onChange={this.onChangeName}/>
       		<div className="radio-wrapper">
-      			<input type="radio" ref="isAscending" name="myradio" value={true} defaultChecked/>
-      			<div className="radio-name">Weniger Punkte gewinnen</div>
-      			<input type="radio" name="myradio" value={false}/>
-      			<div className="radio-name">Mehr Punkte gewinnen</div>
+      			
+      			<div className="radio-name">Weniger Punkte gewinnen
+      			<input type="radio" ref="isAscending" name="myradio" value={true} defaultChecked/></div>
+      			
+      			<div className="radio-name">Mehr Punkte gewinnen <input type="radio" name="myradio" value={false}/></div>
 	  		</div>
       		<input type="button" value="Spiel starten" onClick={this.startNewGame}/>
       	</div>
