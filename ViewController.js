@@ -4,6 +4,8 @@ var StartScreen = React.createFactory(require("./view/StartScreenView.js"));
 var GameView = React.createFactory(require("./view/GameView.js"));
 var ScoreView = React.createFactory(require("./view/ScoreBoard.js"));
 var gameMiddleware = require("./middleware/GameMiddleware.js");
+var raven = require('raven');
+var ravenClient = new raven.Client('https://8d7fdab17cf943fe8a43fbb9aa5e30e3:c7accadeafe04e8eb8c96162d16cbd0e@app.getsentry.com/47591');
 
 module.exports = function() {
 	function Controller(app, gameNotifier, gameManager) {
@@ -26,6 +28,7 @@ module.exports = function() {
 			var game = req.game;
 			var player = req.player;
 			if(!game || !player) {
+				ravenClient.captureMessage("Could not find game or player name");
 				return res.redirect("/");
 			}
 			res.redirect("/game?id=" + game.name + "&playerID=" + player.id);
