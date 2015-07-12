@@ -1,6 +1,6 @@
 var React = require('react');
-var ScoreBoard = require("../view/ScoreBoard.js");
-var GameService = require("./GameService.js");
+var ScoreBoard = require("../server/view/ScoreBoard.js");
+var GameService = require("../server/model/GameService.js");
 var url = require("url");
 
 var gameID = url.parse(document.location.href + "", true).query.id;
