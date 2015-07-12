@@ -1,9 +1,10 @@
 var React = require('react');
 var PlayerRow = require("./PlayerRow.js");
 var gameService = require("../model/GameService.js");
+var url = require("url");
 
 var GameView = React.createClass({
-	getInitialState: function() {
+	getInitialState() {
 		if(!this.props.server) {
 			var name = this.props.game.name;
 			gameService.registerForGameUpdate(name, 
@@ -12,11 +13,17 @@ var GameView = React.createClass({
 		
     	return {};
   	},
-  	updateGame: function(game) {
+  	updateGame(game) {
 	  	this.props.game = game;
 	  	this.forceUpdate();
   	},
-	render: function() {
+  	addPlayer(event) {
+	  	var gameID = url.parse(document.location.href + "", true).query.id;
+	  	let name = this.refs.playername.getDOMNode().value;
+	  	gameService.addPlayer(name, gameID);
+	  	this.refs.playername.getDOMNode().value = ""
+  	},
+	render() {
 		var players = []
 		for(var key in this.props.game.players) {
 		    var player = this.props.game.players[key];
@@ -27,6 +34,11 @@ var GameView = React.createClass({
 				<h2>{"Spiel: " + this.props.game.name}</h2>
 				{players}
 				<a className="game-reference" href={"/scoreboard?id=" + this.props.game.name}>zum Scoreboard</a>
+				<div className="add-player-container">
+					<input type="button" value="+" onClick={this.addPlayer}/>
+					<input placeholder="Spieler hinzufügen" type="text" ref="playername"/>
+					
+				</div>
 			</div>
 		)
 		

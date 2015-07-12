@@ -6,11 +6,17 @@ module.exports = {
 		createGame: createGame,
 		getGameObject: getGameObject,
 		addPoints: addPoints,
-		registerForGameUpdate: registerForGameUpdate
+		registerForGameUpdate: registerForGameUpdate,
+		addPlayer: addPlayer
 	};	
 	
 function joinGame(username, gameName) {
 	document.location = "/addPlayer?username=" + username + "&gameID=" + gameName;
+}
+
+function addPlayer(username, gameID) {
+	var url = "/enterGame?username=" + username + "&gameID=" + gameID
+	request.performPostRequest(url, {}, function(){});
 }
 
 function registerForGameUpdate(name, callback) {
