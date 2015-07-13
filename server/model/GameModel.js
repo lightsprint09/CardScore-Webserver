@@ -30,7 +30,8 @@ module.exports = function() {
 	function getGameStatistics(callback) {
 		var data = {
 			gameCount: Object.keys(games).length,
-			totalPlayers: getPlayersCount()
+			totalPlayers: getPlayersCount(),
+			gamePlayerRate: getPlayersCount() / Object.keys(games).length
 		}
 		
 		callback(null, data)
@@ -39,6 +40,7 @@ module.exports = function() {
 	function getPlayersCount() {
 		return Object.keys(games).reduce(function(count, key){ return count + Object.keys(games[key].players).length}, 0)
 	}
+	
 	
 	return {
 		createGame: createGame,
