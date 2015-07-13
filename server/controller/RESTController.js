@@ -17,7 +17,8 @@ module.exports = function() {
 			var game = req.game;
 			var player = req.player;
 			if(!game || !player) {
-				return res.send({error:true});
+				res.status(500);
+				return {error: "Fehler"}
 			}
 			res.send(game);
 		}
@@ -28,6 +29,10 @@ module.exports = function() {
 			
 			gameManager.getGame(gameID, didGetGame);
 			function didGetGame(err, game) {
+				if(err) {
+					res.status(500);
+					return {error: "Fehler"}
+				}
 				var player = game.addPlayer(username);
 				res.send(game);
 				gameNotifier.notifyGame(game);
@@ -40,6 +45,10 @@ module.exports = function() {
 			var points = req.body.points * 1;
 			gameManager.getGame(gameID, didGetGame);
 			function didGetGame(err, game) {
+				if(err) {
+					res.status(500);
+					return {error: "Fehler"}
+				}
 				var player = game.addPoints(playerID, points);
 				res.send(player);
 				gameNotifier.notifyGame(game);
@@ -50,13 +59,21 @@ module.exports = function() {
 			var gameID = url.parse(req.url, true).query.id;
 			gameManager.getGame(gameID, didGetGame);
 			function didGetGame(err, game) {
+				if(err) {
+					res.status(500);
+					return {error: "Fehler"}
+				}
 				res.send(game);
 			}	
 		}
 		
 		function serverInformation(req, res) {
-			gameManager.getGameStatistics(didGetStatistics)
+			gameManager.getGameStatistics(didGetStatistics);
 			function didGetStatistics(err, result) {
+				if(err) {
+					res.status(500);
+					return {error: "Fehler"}
+				}
 				res.send(result);
 			}
 		}
