@@ -22,6 +22,18 @@ module.exports = function() {
 		}
 	}
 	
+	//TODO integrate
+	function getGame(gameManager) {
+		return function(req, res, next) {
+			var gameID = url.parse(req.url, true).query.id || req.body.id;
+			gameManager.getGame(gameID, didGetGame);
+			function didGetGame(err, game) {
+				req.game = game;
+				next()
+			}
+		}
+	}
+	
 	
 	return {
 		startGame: startGame

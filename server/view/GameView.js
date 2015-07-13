@@ -21,7 +21,7 @@ var GameView = React.createClass({
 	  	var gameID = url.parse(document.location.href + "", true).query.id;
 	  	let name = this.refs.playername.getDOMNode().value;
 	  	gameService.addPlayer(name, gameID);
-	  	this.refs.playername.getDOMNode().value = ""
+	  	this.refs.playername.getDOMNode().value = "";
   	},
 	render() {
 		var players = []

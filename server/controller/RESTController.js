@@ -10,6 +10,7 @@ module.exports = function() {
 			app.post("/enterGame", enterGame);
 			app.get("/gameObject", getGameObject);
 			app.post("/addPoints", addPoints);
+			app.get("/getStatistics", serverInformation);
 		}
 		
 		function startGame(req, res) {
@@ -43,7 +44,6 @@ module.exports = function() {
 				res.send(player);
 				gameNotifier.notifyGame(game);
 			}
-			
 		}
 		
 		function getGameObject(req, res) {
@@ -52,6 +52,13 @@ module.exports = function() {
 			function didGetGame(err, game) {
 				res.send(game);
 			}	
+		}
+		
+		function serverInformation(req, res) {
+			gameManager.getGameStatistics(didGetStatistics)
+			function didGetStatistics(err, result) {
+				res.send(result);
+			}
 		}
 	}
 	
