@@ -1,13 +1,40 @@
-html, body { height: 100%; width: 100%; margin: 0; }
+html, body {
+	margin: 0;
+	background-color: #354D6C;
+	font-family: 'Myriad Set Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.start-screen {
+	max-width: 420px;
+	width: 90%;
+	margin: 10px auto;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.start-screen h2 {
+	background: white;
+	border-bottom: 1px solid #354D6C;
+	margin: 0;
+	padding: 5px 0;
+	text-align: center;
+	color: #354D6C;
+}
 
 .new-game-container, .join-game-container {
-	height: 165px;
+	height: 170px;
 	margin: auto;
 	padding: 5px 0;
 }
 
+.join-game-container h4 {
+	text-align: center;
+	margin: 3px auto -2px auto;
+	color: #354D6C;
+}
+
 .new-game-container {
-	background-color: #354D6C;
+	background-color: white;
 }
 
 .join-game-container {
@@ -28,9 +55,9 @@ input {
 }
 
 .radio-name {
-	width: 200px;
+	width: 220px;
 	height: 28px;
-	color: white;
+	color: #354D6C;
 	margin: auto;
 }
 
@@ -39,6 +66,16 @@ input[type=radio] {
 	float: left;
 	width: 20px;
 	margin: 0 5px;
+}
+
+input[type=button] {
+	-webkit-appearance: none;
+	background-color: #354D6C;
+	border-radius: 5px;
+	border: none;
+	color: white;
+	height: 28px;
+	font-size: 14px;
 }
 
 

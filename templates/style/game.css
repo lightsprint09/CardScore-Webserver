@@ -1,8 +1,29 @@
 body {
-	  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	font-family: 'Myriad Set Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif; 
    font-weight: 300;
-   background-color: #354D6C;
    margin: 0;
+}
+
+.game-view {
+	width: 94%;
+	max-width: 420px;
+	margin: 10px auto;
+	background-color: #354D6C;
+	height: auto;
+	border-radius: 8px;
+	overflow: hidden;
+	padding-bottom: 10px;
+}
+
+.scoreboard-link {
+	width: 40px;
+	height: 40px;
+	float: right;
+	background-image: url(../image/glyphicons-75-cup.png);
+	background-size: 20px;
+	margin: 4px 4px 0px auto;
+	background-position: center center;
+	background-repeat: no-repeat;
 }
 
 h2 {
@@ -37,6 +58,7 @@ ul li {
 }
 
 .player-row {
+	padding-top: 3px;
 	border-bottom: 1px solid white;
 }
 

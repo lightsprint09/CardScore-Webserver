@@ -1,6 +1,18 @@
 body {
-	background: white !important;
+	background-color: #354D6C;
 }
+
+.scoreboard-view {
+	width: 94%;
+	max-width: 420px;
+	margin: 10px auto;
+	background-color: white;
+	height: auto;
+	border-radius: 8px;
+	overflow: hidden;
+	padding-bottom: 10px;
+}
+
 .scoreboard-view li {
 	list-style: none;
 	width: 100%;
@@ -22,4 +34,5 @@ body {
 	text-align: center;
 	margin: auto;
 	margin-top: 40px;
+	font-size: 18px;
 }

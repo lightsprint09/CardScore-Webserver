@@ -20,8 +20,9 @@ var StartScreen = React.createClass({
 	render: function() {
     return (
       <div className="start-screen">
+      	<h2>CardScore</h2>
       	<div className="new-game-container">
-      		<input type="text" placeholder="Name" onChange={this.onChangeName}/>
+      		<input type="text" placeholder="👦🏽 Name" onChange={this.onChangeName}/>
       		<div className="radio-wrapper">
       			
       			<div className="radio-name">Weniger Punkte gewinnen
@@ -32,8 +33,9 @@ var StartScreen = React.createClass({
       		<input type="button" value="Spiel starten" onClick={this.startNewGame}/>
       	</div>
       	<div className="join-game-container">
-      		<input type="text" placeholder="Name" onChange={this.onChangeName}/>
-      		<input type="text" placeholder="Spielname" onChange={this.onChangeGameName}/>
+      		<h4>Spiel beitreten</h4>
+      		<input type="text" placeholder="👦🏽 Name" onChange={this.onChangeName}/>
+      		<input type="text" placeholder="🃏 Spielname" onChange={this.onChangeGameName}/>
       		<input type="button" value="Spiel beitreten" onClick={this.enterGame}/>
       	</div>
       </div>

@@ -21,7 +21,7 @@ var GameView = React.createClass({
 		var pointList = this.props.player.points.map(function(point){ return <li>{point}</li>});
 		return (
 			<div className="player-row">
-			<h3>{this.props.player.name + " - Punkte: " + this.props.player.pointsAll}</h3>
+			<h3>{this.props.player.name + " " + this.props.player.pointsAll}</h3>
 			<input type="button" onClick= {this.onSubmitPoints} value="Eintragen"/>
 			<input type="number" value={this.state.points}  onChange={this.onChangePoints} placeholder="Neue Punkte"/>
 			

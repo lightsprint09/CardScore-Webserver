@@ -31,9 +31,8 @@ var GameView = React.createClass({
 		}
 		return (
 			<div className="game-view">
-				<h2>{"Spiel: " + this.props.game.name}</h2>
+				<h2>{"Spiel: " + this.props.game.name}<a className="scoreboard-link" href={"/scoreboard?id=" + this.props.game.name}></a></h2>
 				{players}
-				<a className="game-reference" href={"/scoreboard?id=" + this.props.game.name}>zum Scoreboard</a>
 				<div className="add-player-container">
 					<input type="button" value="+" onClick={this.addPlayer}/>
 					<input placeholder="Spieler hinzufügen" type="text" ref="playername"/>
