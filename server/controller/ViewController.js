@@ -29,7 +29,7 @@ module.exports = function() {
 			var player = req.player;
 			if(!game || !player) {
 				ravenClient.captureMessage("Could not find game or player name");
-				return res.redirect("/");
+				return res.render('Error.ejs', {error: "Hoppla, das Spiel existiert nicht"});
 			}
 			res.redirect("/game?id=" + game.name + "&playerID=" + player.id);
 		}
@@ -44,7 +44,7 @@ module.exports = function() {
 			gameManager.getGame(gameID, didGetGame);
 			function didGetGame(err, game) {
 				if(!game) {
-					return res.send("Ungültiger Spielname")
+					return res.render('Error.ejs', {error: "Hoppla, das Spiel existiert nicht"});
 				}
 				var player = game.addPlayer(username);
 				res.redirect("/game?id=" + game.name + "&playerID=" + player.id);
@@ -57,7 +57,7 @@ module.exports = function() {
 			var game = gameManager.getGame(gameID, didGetGame);
 			function didGetGame(err, game) {
 				if(!game || err) {
-					res.send("Ungültigen Spiel");
+					return res.render('Error.ejs', {error: "Hoppla, das Spiel existiert nicht"});
 				}
 				var reactHtml = React.renderToString(
 					GameView({game: game, server: true}));
@@ -69,6 +69,9 @@ module.exports = function() {
 			var gameID = url.parse(req.url, true).query.id;
 			gameManager.getGame(gameID, didGetGame);
 			function didGetGame(err, game) {
+				if(!game) {
+					return res.render('Error.ejs', {error: "Hoppla, das Spiel existiert nicht"});
+				}
 				var reactHtml = React.renderToString(
 					ScoreView({game: game, server: true}));
 				res.render('Scoreboard.ejs', {reactOutput: reactHtml, title: gameID});

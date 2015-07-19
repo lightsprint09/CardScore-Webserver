@@ -1,0 +1,27 @@
+html, body {
+	margin: 0;
+	background-color: white;
+	font-family: 'Myriad Set Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.error-container {
+	max-width: 420px;
+	width: 90%;
+	margin: 10px auto;
+	border-radius: 8px;
+	overflow: hidden;
+	background: #ccc;
+}
+
+h3 {
+	margin: 0;
+	background: #354D6C;
+	color: #d73045;
+	text-align: center;
+	padding: 5px;
+}
+
+.error-text {
+	text-align: center;
+	padding: 20px;
+}
