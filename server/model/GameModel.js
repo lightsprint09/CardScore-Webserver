@@ -1,6 +1,6 @@
 var haikunator = require("haikunator");
 var raven = require('raven');
-var ravenClient = new raven.Client('https://8d7fdab17cf943fe8a43fbb9aa5e30e3:c7accadeafe04e8eb8c96162d16cbd0e@app.getsentry.com/47591');
+var ravenClient = new raven.Client(process.env.sentryAPIKey);
 var game = require("./Game.js");
 
 module.exports = function() {
