@@ -1,5 +1,5 @@
 var nodeuuid = require("node-uuid");
-module.exports = function(name_, orderAscending_) {
+module.exports = function(name_, orderAscending) {
 	var name = name_;
 	var players = {};
 	
@@ -13,14 +13,6 @@ module.exports = function(name_, orderAscending_) {
 		};
 		players[id] = player;
 		return player;
-	}
-	
-	function getScore() {
-		return players;
-	}
-	
-	function getName() {
-		return name;
 	}
 	
 	function addPoints(playerID, points) {
@@ -48,6 +40,6 @@ module.exports = function(name_, orderAscending_) {
 		name: name,
 		players: players,
 		addPoints: addPoints,
-		orderAscending: orderAscending_
+		orderAscending: orderAscending
 	};
 }
