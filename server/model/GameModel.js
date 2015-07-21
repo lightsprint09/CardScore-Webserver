@@ -20,7 +20,7 @@ module.exports = function() {
 	
 	function deleteGame(id, callback) {
 		games[id] = null;
-		callback(null, err);
+		callback(null, true);
 	}
 	
 	function getGame(id, callback) {
@@ -41,10 +41,31 @@ module.exports = function() {
 		return Object.keys(games).reduce(function(count, key){ return count + Object.keys(games[key].players).length}, 0)
 	}
 	
+	function addPlayer(gameID, playerName, callback) {
+		var game = games[gameID];
+		if(!game) {
+			return callback(new Error("Game not found"));
+		}
+		var player = game.addPlayer(playerName);
+		callback(null, player, game);
+	}
+	
+	function addPoints(gameID, playerID, points, callback) {
+		var game = games[gameID];
+		if(!game) {
+			return callback(new Error("Could not find game"))
+		}
+		game.addPoints(playerID, points);
+		callback(null, game);
+	}
+	
 	
 	return {
 		createGame: createGame,
 		getGame: getGame,
-		getGameStatistics: getGameStatistics
+		getGameStatistics: getGameStatistics,
+		addPlayer: addPlayer,
+		addPoints: addPoints,
+		deleteGame: deleteGame
 	}
 }

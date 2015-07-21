@@ -11,11 +11,11 @@ module.exports = {
 	};	
 	
 function joinGame(username, gameName) {
-	document.location = "/addPlayer?username=" + username + "&gameID=" + gameName;
+	document.location = "/addPlayer?username=" + username + "&id=" + gameName;
 }
 
 function addPlayer(username, gameID) {
-	var url = "/enterGame?username=" + username + "&gameID=" + gameID
+	var url = "/enterGame?username=" + username + "&id=" + gameID
 	request.performPostRequest(url, {}, function(){});
 }
 
@@ -30,12 +30,7 @@ function addPoints(gameID, playerID, points, callback) {
 		playerID: playerID,
 		points: points
 	};
-	request.performPostRequest("/addPoints", data, didSubmitPoints);
-	
-	function didSubmitPoints(err, result) {
-		var game = JSON.parse(result);
-		callback(err, game);
-	}
+	request.performPostRequest("/addPoints", data, callback);
 }
 
 function createGame(username, orderAscending) {
