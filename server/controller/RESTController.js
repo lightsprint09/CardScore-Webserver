@@ -1,15 +1,16 @@
 var url = require("url");
-var gameMiddleware = require("../middleware/GameMiddleware.js");
+var GameMiddleware = require("../middleware/GameMiddleware.js");
 
 module.exports = function() {
 	
 	function Controller(app, gameNotifier, gameManager) {
 		registerPath(app);
 		function registerPath(app) {
-			app.post("/startGame", gameMiddleware.startGame(gameManager, gameNotifier), startGame);
-			app.post("/enterGame", enterGame);
-			app.get("/gameObject", getGameObject);
-			app.post("/addPoints", addPoints);
+			var gameMiddleware = GameMiddleware(gameManager, gameNotifier);
+			app.post("/startGame", gameMiddleware.startGame, startGame);
+			app.post("/enterGame", gameMiddleware.getGame, enterGame);
+			app.get("/gameObject", gameMiddleware.getGame, getGameObject);
+			app.post("/addPoints", gameMiddleware.getGame, addPoints);
 			app.get("/getStatistics", serverInformation);
 		}
 		
@@ -24,16 +25,15 @@ module.exports = function() {
 		}
 		
 		function enterGame(req, res) {
-			var username = url.parse(req.url, true).query.username;
-			var gameID = url.parse(req.url, true).query.gameID;
+			var game = req.game;
+			var playerName = url.parse(req.url, true).query.username;			
+			if(!playerName) {
+				res.error(400);
+				return res.send({error: "Error"});
+			}
 			
-			gameManager.getGame(gameID, didGetGame);
-			function didGetGame(err, game) {
-				if(err) {
-					res.status(500);
-					return {error: "Fehler"}
-				}
-				var player = game.addPlayer(username);
+			gameManager.addPlayer(game.name, playerName, didAddPlayer);
+			function didAddPlayer(err, player) {
 				res.send(game);
 				gameNotifier.notifyGame(game);
 			}

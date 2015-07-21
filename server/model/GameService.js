@@ -11,11 +11,11 @@ module.exports = {
 	};	
 	
 function joinGame(username, gameName) {
-	document.location = "/addPlayer?username=" + username + "&gameID=" + gameName;
+	document.location = "/addPlayer?username=" + username + "&id=" + gameName;
 }
 
 function addPlayer(username, gameID) {
-	var url = "/enterGame?username=" + username + "&gameID=" + gameID
+	var url = "/enterGame?username=" + username + "&id=" + gameID
 	request.performPostRequest(url, {}, function(){});
 }
 

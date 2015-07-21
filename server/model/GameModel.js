@@ -41,10 +41,20 @@ module.exports = function() {
 		return Object.keys(games).reduce(function(count, key){ return count + Object.keys(games[key].players).length}, 0)
 	}
 	
+	function addPlayer(gameID, playerName, callback) {
+		var game = games[gameID];
+		if(!game) {
+			return callback(new Error("Game not found"));
+		}
+		var player = game.addPlayer(playerName);
+		callback(null, player);
+	}
+	
 	
 	return {
 		createGame: createGame,
 		getGame: getGame,
-		getGameStatistics: getGameStatistics
+		getGameStatistics: getGameStatistics,
+		addPlayer: addPlayer
 	}
 }
