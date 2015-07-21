@@ -20,7 +20,7 @@ module.exports = function() {
 	
 	function deleteGame(id, callback) {
 		games[id] = null;
-		callback(null, err);
+		callback(null, true);
 	}
 	
 	function getGame(id, callback) {
@@ -65,6 +65,7 @@ module.exports = function() {
 		getGame: getGame,
 		getGameStatistics: getGameStatistics,
 		addPlayer: addPlayer,
-		addPoints: addPoints
+		addPoints: addPoints,
+		deleteGame: deleteGame
 	}
 }
