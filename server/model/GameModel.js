@@ -47,7 +47,16 @@ module.exports = function() {
 			return callback(new Error("Game not found"));
 		}
 		var player = game.addPlayer(playerName);
-		callback(null, player);
+		callback(null, player, game);
+	}
+	
+	function addPoints(gameID, playerID, points, callback) {
+		var game = games[gameID];
+		if(!game) {
+			return callback(new Error("Could not find game"))
+		}
+		game.addPoints(playerID, points);
+		callback(null, game);
 	}
 	
 	
@@ -55,6 +64,7 @@ module.exports = function() {
 		createGame: createGame,
 		getGame: getGame,
 		getGameStatistics: getGameStatistics,
-		addPlayer: addPlayer
+		addPlayer: addPlayer,
+		addPoints: addPoints
 	}
 }

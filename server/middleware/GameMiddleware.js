@@ -15,14 +15,13 @@ module.exports = function(gameManager, gameNotifier) {
 			req.player = game.addPlayer(username);
 			req.game = game;
 			gameNotifier.addGameNotification(game.name);
-			next()
+			next();
 		}
 	}
 	
 	function getGame(req, res, next) {
 		var gameID = url.parse(req.url, true).query.id ||
 			req.body.id;
-			console.log(gameID)
 		gameManager.getGame(gameID, didGetGame);
 		function didGetGame(err, game) {
 			if(!game) {

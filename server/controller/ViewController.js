@@ -35,15 +35,14 @@ module.exports = function() {
 		}
 		
 		function addPlayer(req, res) {
-			var game = req.game;
 			var playerName = url.parse(req.url, true).query.username;
 			if(!playerName) {
 				res.error(400);
 				return res.send({error: "Error"});
 			}
 			
-			gameManager.addPlayer(game.name, playerName, didAddPlayer);
-			function didAddPlayer(err, player) {
+			gameManager.addPlayer(req.game.name, playerName, didAddPlayer);
+			function didAddPlayer(err, player, game) {
 				res.redirect("/game?id=" + game.name + "&playerID=" + player.id);
 				gameNotifier.notifyGame(game);
 			}
