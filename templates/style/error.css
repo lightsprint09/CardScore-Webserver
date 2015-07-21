@@ -2,6 +2,7 @@ html, body {
 	margin: 0;
 	background-color: white;
 	font-family: 'Myriad Set Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	background-color: #354D6C;
 }
 
 .error-container {
@@ -10,15 +11,16 @@ html, body {
 	margin: 10px auto;
 	border-radius: 8px;
 	overflow: hidden;
-	background: #ccc;
+	background: white;
 }
 
 h3 {
 	margin: 0;
-	background: #354D6C;
+	background: white;
 	color: #d73045;
 	text-align: center;
-	padding: 5px;
+	padding: 7px;
+	border-bottom: 1px solid #354D6C;
 }
 
 .error-text {
