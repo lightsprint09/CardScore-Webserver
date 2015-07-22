@@ -6,10 +6,7 @@ var StartScreen = React.createClass({
   	},
 	startNewGame(){
 		if(!this.state.userName) {
-			var userInput = this.refs.newGameUser.getDOMNode();
-			userInput.classList.add("missing");
-			setTimeout(function(){ userInput.classList.remove("missing"); }, 3000);
-			return
+			return this.warnInvalidInput(this.refs.newGameUser.getDOMNode());
 		}
 		var orderAscending = this.refs.isAscending.getDOMNode().checked;
 		GamerService.createGame(this.state.userName, orderAscending);

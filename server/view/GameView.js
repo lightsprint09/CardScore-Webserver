@@ -13,13 +13,20 @@ var GameView = React.createClass({
 		
     	return {};
   	},
+  	warnInvalidInput(input) {
+		input.classList.add("missing");
+		setTimeout(function(){ input.classList.remove("missing"); }, 3000);
+	},
   	updateGame(game) {
 	  	this.props.game = game;
 	  	this.forceUpdate();
   	},
   	addPlayer(event) {
-	  	var gameID = url.parse(document.location.href + "", true).query.id;
 	  	let name = this.refs.playername.getDOMNode().value;
+	  	if(!name) {
+		  	return this.warnInvalidInput(this.refs.playername.getDOMNode());
+	  	}
+	  	let gameID = url.parse(document.location.href + "", true).query.id;
 	  	gameService.addPlayer(name, gameID);
 	  	this.refs.playername.getDOMNode().value = "";
   	},
@@ -31,7 +38,9 @@ var GameView = React.createClass({
 		}
 		return (
 			<div className="game-view">
-				<h2>{"Spiel: " + this.props.game.name}<a className="scoreboard-link" href={"/scoreboard?id=" + this.props.game.name}></a></h2>
+				<h2>{"Spiel: " + this.props.game.name}
+				<a className="scoreboard-link" href={"/scoreboard?id=" + this.props.game.name}></a>
+				</h2>
 				{players}
 				<div className="add-player-container">
 					<input type="button" value="+" onClick={this.addPlayer}/>

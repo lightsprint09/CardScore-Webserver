@@ -119,3 +119,7 @@ input[type=button] {
 	text-decoration: none;
 	width: 30px;
 }
+
+.missing {
+	border: 1px solid #d73045 !important;
+}
