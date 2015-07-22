@@ -78,4 +78,12 @@ input[type=button] {
 	font-size: 14px;
 }
 
+input {
+	-webkit-transition: 400ms;
+}
+
+.missing {
+	border: 2px solid #d73045;
+}
+
 
