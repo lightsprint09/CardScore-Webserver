@@ -12,6 +12,8 @@ module.exports = function() {
 			app.get("/gameObject", gameMiddleware.getGame, getGameObject);
 			app.post("/addPoints", gameMiddleware.getGame, addPoints);
 			app.get("/getStatistics", serverInformation);
+			app.post("/game/player/delete", gameMiddleware.getGame, deletePlayer);
+			app.post("/game/removescore", gameMiddleware.getGame, removeScore);
 		}
 		
 		function startGame(req, res) {
@@ -52,6 +54,15 @@ module.exports = function() {
 			}
 		}
 		
+		function deletePlayer(req, res) {
+			var playerID = req.body.playerID;
+			gameManager.deletePlayer(req.game, playerID, didDeletePlayer);
+			function didDeletePlayer(err, success) {
+				res.send(success);
+				gameNotifier.notifyGame(req.game);
+			}
+		}
+		
 		function getGameObject(req, res) {
 			res.send(req.game);
 		}
@@ -64,6 +75,16 @@ module.exports = function() {
 					return {error: "Fehler"}
 				}
 				res.send(result);
+			}
+		}
+		
+		function removeScore(req,res) {
+			var scoreIndex = req.body.scoreIndex;
+			var playerID = req.body.playerID;
+			gameManager.removePointsAtIndex(req.game, playerID, scoreIndex, didDeleteScore);
+			function didDeleteScore(err, success) {
+				res.send(success);
+				gameNotifier.notifyGame(req.game);
 			}
 		}
 	}
