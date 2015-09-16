@@ -59,6 +59,19 @@ module.exports = function() {
 		callback(null, game);
 	}
 	
+	function deletePlayer(game, playerID, callback) {
+		if(!game) {
+			return callback(true, false);
+		}
+		game.deletePlayer(playerID);
+		callback(false, true);
+	}
+	
+	function removePointsAtIndex(game, playerID, index, callback) {
+		game.removePointsAtIndex(playerID, index);
+		callback(null, true);
+	}
+	
 	
 	return {
 		createGame: createGame,
@@ -66,6 +79,8 @@ module.exports = function() {
 		getGameStatistics: getGameStatistics,
 		addPlayer: addPlayer,
 		addPoints: addPoints,
-		deleteGame: deleteGame
+		deleteGame: deleteGame,
+		deletePlayer: deletePlayer,
+		removePointsAtIndex: removePointsAtIndex
 	}
 }

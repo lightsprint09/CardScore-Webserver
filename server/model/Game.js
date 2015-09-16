@@ -35,11 +35,23 @@ module.exports = function(name_, orderAscending) {
 		return lastPoints + points == 0 && lastPoints;
 	}
 	
+	function removePointsAtIndex(playerID, index) {
+		var player = players[playerID]
+		player.points.splice(index, 1);
+		player.pointsAll = player.points.reduce(function(a, b){return a  + b}, 0);
+	}
+	
+	function deletePlayer(playerID) {
+		delete players[playerID]
+	}
+	
 	return {
 		addPlayer: addPlayer,
 		name: name,
 		players: players,
 		addPoints: addPoints,
-		orderAscending: orderAscending
+		orderAscending: orderAscending,
+		deletePlayer: deletePlayer,
+		removePointsAtIndex: removePointsAtIndex
 	};
 }
