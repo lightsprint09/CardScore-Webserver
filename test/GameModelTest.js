@@ -76,6 +76,7 @@ describe('GameModelServiceTest', function(){
 	 
 	 describe('#getGameStatistics()', function(){
 		 it('should getGameStatistics correct', function(done){
+			testGame.playerIdSittingPosition = [player1.id]
 			gameModel.getGameStatistics(didGetStatistics);
 			function didGetStatistics(err, result) {
 				assert.equal(result.gameCount, 1,
@@ -84,6 +85,29 @@ describe('GameModelServiceTest', function(){
 					"should have one player");
 				assert.equal(result.gamePlayerRate, 1,
 					"should have one player");
+				
+				done()
+			}
+		 })
+	 })
+	 
+	 describe('#updateSittingPosition()', function(){
+		 it('should addPlayer correct', function(done){
+			gameModel.addPlayer(testGame.name, player2.name, didAddPlayer);
+			function didAddPlayer(err, player, game) {
+				player2 = player;
+				testGame = game
+				done()
+			}
+		 })
+		 
+		 it('should updateSittingPosition correct', function(done){
+			//var currentSitting = [player1.id];
+			//assert.equal(testGame.playerIdSittingPosition, currentSitting)
+			var updateSitting = [player2.id, player1.id];
+			gameModel.updateSittingPosition(testGame, updateSitting, didUpdateSitting);
+			function didUpdateSitting(err, game) {
+				assert.equal(game.playerIdSittingPosition, updateSitting, "Should update")
 				
 				done()
 			}

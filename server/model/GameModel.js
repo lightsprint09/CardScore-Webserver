@@ -72,6 +72,11 @@ module.exports = function() {
 		callback(null, true);
 	}
 	
+	function updateSittingPosition(game, sittingPositions, callback) {
+		game.playerIdSittingPosition = sittingPositions
+		callback(null, game);
+	}
+	
 	
 	return {
 		createGame: createGame,
@@ -81,6 +86,7 @@ module.exports = function() {
 		addPoints: addPoints,
 		deleteGame: deleteGame,
 		deletePlayer: deletePlayer,
-		removePointsAtIndex: removePointsAtIndex
+		removePointsAtIndex: removePointsAtIndex,
+		updateSittingPosition: updateSittingPosition
 	}
 }

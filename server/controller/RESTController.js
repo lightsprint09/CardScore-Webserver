@@ -87,6 +87,15 @@ module.exports = function() {
 				gameNotifier.notifyGame(req.game);
 			}
 		}
+		
+		function updateSittingPosition(res, req) {
+			var sittingPositions = req.body;
+			gameManager.updateSittingPosition(req.game, sittingPositions, function(error, game) {
+				res.send(game != null);
+				gameNotifier.notifyGame(game);
+			})
+			
+		}
 	}
 	
 	return Controller;
