@@ -13,6 +13,7 @@ module.exports = function(gameManager, gameNotifier) {
 		gameManager.createGame(orderAscending, didCreateGame);
 		function didCreateGame(err, game) {
 			req.player = game.addPlayer(username);
+			game.playerIdSittingPosition.push(req.player.id);
 			req.game = game;
 			gameNotifier.addGameNotification(game.name);
 			next();

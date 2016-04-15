@@ -11,6 +11,7 @@ module.exports = function() {
 			app.post("/enterGame", gameMiddleware.getGame, enterGame);
 			app.get("/gameObject", gameMiddleware.getGame, getGameObject);
 			app.post("/addPoints", gameMiddleware.getGame, addPoints);
+			app.post("/game/sittingPosition", gameMiddleware.getGame, updateSittingPositions);
 			app.get("/getStatistics", serverInformation);
 			app.post("/game/player/delete", gameMiddleware.getGame, deletePlayer);
 			app.post("/game/removescore", gameMiddleware.getGame, removeScore);
@@ -86,6 +87,15 @@ module.exports = function() {
 				res.send(success);
 				gameNotifier.notifyGame(req.game);
 			}
+		}
+		
+		function updateSittingPositions(req, res) {
+			var sittingPositions = req.body;
+			gameManager.updateSittingPositions(req.game, sittingPositions, function(error, game) {
+				res.send(game != null);
+				gameNotifier.notifyGame(game);
+			})
+			
 		}
 	}
 	

@@ -47,6 +47,7 @@ module.exports = function() {
 			return callback(new Error("Game not found"));
 		}
 		var player = game.addPlayer(playerName);
+		game.playerIdSittingPosition.push(player.id);
 		callback(null, player, game);
 	}
 	
@@ -72,6 +73,11 @@ module.exports = function() {
 		callback(null, true);
 	}
 	
+	function updateSittingPositions(game, sittingPositions, callback) {
+		game.playerIdSittingPosition = sittingPositions
+		callback(null, game);
+	}
+	
 	
 	return {
 		createGame: createGame,
@@ -81,6 +87,7 @@ module.exports = function() {
 		addPoints: addPoints,
 		deleteGame: deleteGame,
 		deletePlayer: deletePlayer,
-		removePointsAtIndex: removePointsAtIndex
+		removePointsAtIndex: removePointsAtIndex,
+		updateSittingPositions: updateSittingPositions
 	}
 }
