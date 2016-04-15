@@ -95,6 +95,7 @@ describe('GameModelServiceTest', function(){
 		 it('should addPlayer correct', function(done){
 			gameModel.addPlayer(testGame.name, player2.name, didAddPlayer);
 			function didAddPlayer(err, player, game) {
+				assert.equal(game.playerIdSittingPosition.length, 2)
 				player2 = player;
 				testGame = game
 				done()
@@ -105,7 +106,7 @@ describe('GameModelServiceTest', function(){
 			//var currentSitting = [player1.id];
 			//assert.equal(testGame.playerIdSittingPosition, currentSitting)
 			var updateSitting = [player2.id, player1.id];
-			gameModel.updateSittingPosition(testGame, updateSitting, didUpdateSitting);
+			gameModel.updateSittingPositions(testGame, updateSitting, didUpdateSitting);
 			function didUpdateSitting(err, game) {
 				assert.equal(game.playerIdSittingPosition, updateSitting, "Should update")
 				

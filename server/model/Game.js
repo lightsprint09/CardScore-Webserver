@@ -2,7 +2,7 @@ var nodeuuid = require("node-uuid");
 module.exports = function(name_, orderAscending) {
 	var name = name_;
 	var players = {};
-	var playerIdSittingPosition = []
+	var playerIdSittingPosition = [];
 	
 	function addPlayer(name) {
 		var id = nodeuuid.v1();
@@ -13,9 +13,12 @@ module.exports = function(name_, orderAscending) {
 			pointsAll: 0
 		};
 		players[id] = player;
-		playerIdSittingPosition.push(id);
 		
 		return player;
+	}
+	
+	function updateSittingPositions(sittingPositions) {
+		playerIdSittingPosition = sittingPositions
 	}
 	
 	function addPoints(playerID, points) {
@@ -53,6 +56,8 @@ module.exports = function(name_, orderAscending) {
 		addPlayer: addPlayer,
 		name: name,
 		players: players,
+		playerIdSittingPosition: playerIdSittingPosition,
+		updateSittingPositions: updateSittingPositions,
 		addPoints: addPoints,
 		orderAscending: orderAscending,
 		deletePlayer: deletePlayer,
