@@ -20,6 +20,7 @@ module.exports = function() {
 	
 	function deleteGame(id, callback) {
 		games[id] = null;
+		
 		callback(null, true);
 	}
 	
@@ -64,6 +65,11 @@ module.exports = function() {
 		if(!game) {
 			return callback(true, false);
 		}
+		for(var i = game.playerIdSittingPosition.length - 1; i >= 0; i--) {
+		    if(game.playerIdSittingPosition[i] == playerID) {
+		       game.playerIdSittingPosition.splice(i, 1);
+		    }
+	    }
 		game.deletePlayer(playerID);
 		callback(false, true);
 	}
