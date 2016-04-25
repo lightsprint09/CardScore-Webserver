@@ -15,6 +15,7 @@ var rootPath = path.join(path.dirname(require.main.filename), '/../..')
 app.use("/", express.static(rootPath, { maxAge: 0 }));
 app.set('views', path.join(rootPath, '/templates'));
 app.set('view engine', 'ejs');
+//app.set("/apple-app-site-association", path.join(rootPath, '/static/apple-app-site-association'))
 app.use(bodyParser.json());
 app.use(raven.middleware.express(process.env.sentryAPIKey));
 
