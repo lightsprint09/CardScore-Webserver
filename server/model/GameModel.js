@@ -8,9 +8,11 @@ module.exports = function() {
 	
 	function createGame(orderAscending, callback) {
 		var name = haikunator({tokenLength: 0});
+		var trys = 0
 		while(games[name]) {
 			ravenClient.captureMessage("Duplicated name:" + name);
-			name = haikunator({tokenLength: 0});
+			var tokenLength = trys > 10 ? 2 : 0
+			name = haikunator({tokenLength: tokenLength});
 		}
 		var newGame = game(name, orderAscending);
 		games[name] = newGame;
