@@ -15,6 +15,7 @@ module.exports = function() {
 			app.get("/getStatistics", serverInformation);
 			app.post("/game/player/delete", gameMiddleware.getGame, deletePlayer);
 			app.post("/game/removescore", gameMiddleware.getGame, removeScore);
+			app.post("/game/addInputValue", gameMiddleware.getGame, addInputValue);
 		}
 		
 		function startGame(req, res) {
@@ -54,6 +55,21 @@ module.exports = function() {
 				gameNotifier.notifyGame(game);
 			}
 		}
+		
+		function addInputValue(req, res) {
+			var playerID = req.body.playerID;
+			var value = req.body.inputValue * 1;
+			gameManager.addInputValue(req.game.name, playerID, value, didAddPoints);
+			function didAddPoints(err, game) {
+				if(err) {
+					res.status(500);
+					return {error: "Fehler"}
+				}
+				res.send();
+				gameNotifier.notifyGame(game);
+			}
+		}
+		
 		
 		function deletePlayer(req, res) {
 			var playerID = req.body.playerID;

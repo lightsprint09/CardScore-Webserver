@@ -10,7 +10,8 @@ module.exports = function(name_, orderAscending) {
 			name: name,
 			id: id,
 			points: [],
-			pointsAll: 0
+			pointsAll: 0,
+			values: []
 		};
 		players[id] = player;
 		
@@ -23,22 +24,18 @@ module.exports = function(name_, orderAscending) {
 	
 	function addPoints(playerID, points) {
 		var player = players[playerID];
-		if(shouldDeletePoints(player, points)) {
-			player.points.pop();
-		}else {
-			player.points.push(points);
-		}
+		player.points.push(points);
 		player.pointsAll = player.points.reduce(function(a, b){return a  + b}, 0);
+		player.values = [];
 		
 		return player;
 	}
 	
-	function shouldDeletePoints(player, points) {
-		var pointList = player.points;
-		var pointListLength = pointList.length;
-		var lastPoints = pointList[pointListLength - 1];
+	function addValue(playerID, value) {
+		var player = players[playerID];
+		player.values.push(value);
 		
-		return lastPoints + points == 0 && lastPoints;
+		return player;
 	}
 	
 	function removePointsAtIndex(playerID, index) {
@@ -61,6 +58,7 @@ module.exports = function(name_, orderAscending) {
 		addPoints: addPoints,
 		orderAscending: orderAscending,
 		deletePlayer: deletePlayer,
-		removePointsAtIndex: removePointsAtIndex
+		removePointsAtIndex: removePointsAtIndex,
+		addValue: addValue
 	};
 }

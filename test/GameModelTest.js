@@ -49,6 +49,16 @@ describe('GameModelServiceTest', function(){
 	 })
 	 
 	 describe('#addPoints()', function(){
+		 it('should addValue correct', function(done){
+			var value = 9;
+			gameModel.addInputValue(testGame.name, player1.id, value, didAddPoints);
+			function didAddPoints(err, game) {
+				var player = game.players[Object.keys(game.players)[0]];
+				assert.equal(player.values.length, 1);
+				assert.equal(player.values[0], value);
+				done()
+			}
+		 })
 		 it('should addPoints correct', function(done){
 			var points = 15;
 			gameModel.addPoints(testGame.name, player1.id, points, didAddPoints);
@@ -57,6 +67,7 @@ describe('GameModelServiceTest', function(){
 				assert.equal(player.pointsAll, points);
 				assert.equal(player.points.length, 1);
 				assert.equal(player.points[0], points);
+				assert.equal(player.values.length, 0);
 				done()
 			}
 		 })
