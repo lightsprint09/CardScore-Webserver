@@ -72,6 +72,16 @@ module.exports = function() {
 		callback(null, game);
 	}
 	
+	function setGameRule(gameID, rule, callback) {
+		var game = games[gameID];
+		if(!game) {
+			return callback(new Error("Could not find game"))
+		}
+		game.setGameRule(rule);
+		game.gameRule = rule
+		callback(null, game);
+	}
+	
 	function deletePlayer(game, playerID, callback) {
 		if(!game) {
 			return callback(true, false);
@@ -106,6 +116,7 @@ module.exports = function() {
 		deletePlayer: deletePlayer,
 		removePointsAtIndex: removePointsAtIndex,
 		updateSittingPositions: updateSittingPositions,
-		addInputValue: addInputValue
+		addInputValue: addInputValue,
+		setGameRule: setGameRule
 	}
 }

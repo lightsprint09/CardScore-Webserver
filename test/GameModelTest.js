@@ -126,6 +126,26 @@ describe('GameModelServiceTest', function(){
 		 })
 	 })
 	 
+	 describe('#setGameRule()', function(){
+		 it('should setGameRule', function(done){
+			gameModel.setGameRule(testGame.name, {name: "rule"},  didSetGameRule);
+			function didSetGameRule(err, result) {
+				assert(!err, "should not trow error")
+				done()
+			}
+		 })
+		 
+		 it('should find GameRule', function(done){
+			gameModel.getGame(testGame.name, didGetGame);
+			function didGetGame(err, game) {
+				assert.equal(game.gameRule.name, "rule")
+				done()
+			}
+		 })
+		 
+		
+	 })
+	 
 	 describe('#deleteGame()', function(){
 		 it('should deleteGame correct', function(done){
 			gameModel.deleteGame(testGame.name, didDeleteGame);

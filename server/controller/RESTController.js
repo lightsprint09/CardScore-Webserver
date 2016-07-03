@@ -16,6 +16,7 @@ module.exports = function() {
 			app.post("/game/player/delete", gameMiddleware.getGame, deletePlayer);
 			app.post("/game/removescore", gameMiddleware.getGame, removeScore);
 			app.post("/game/addInputValue", gameMiddleware.getGame, addInputValue);
+			app.post("/game/rule", gameMiddleware.getGame, setGameRule);
 		}
 		
 		function startGame(req, res) {
@@ -69,6 +70,20 @@ module.exports = function() {
 				gameNotifier.notifyGame(game);
 			}
 		}
+		
+		function setGameRule(req, res) {
+			var rule = req.body.gameRule;
+			gameManager.setGameRule(req.game.name, rule,  didSetGameRule);
+			function didSetGameRule(err, game) {
+				if(err) {
+					res.status(500);
+					return {error: "Fehler"}
+				}
+				
+				res.send();
+				gameNotifier.notifyGame(game);
+			}
+		} 
 		
 		
 		function deletePlayer(req, res) {

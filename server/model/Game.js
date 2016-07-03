@@ -3,6 +3,11 @@ module.exports = function(name_, orderAscending) {
 	var name = name_;
 	var players = {};
 	var playerIdSittingPosition = [];
+	var gameRule = {name: "Standart", 
+					calculation: { format: "Punkte" },
+					inputs: [{
+					format: "Punkte" } ]
+					}
 	
 	function addPlayer(name) {
 		var id = nodeuuid.v1();
@@ -21,6 +26,10 @@ module.exports = function(name_, orderAscending) {
 	function updateSittingPositions(sittingPositions) {
 		playerIdSittingPosition = sittingPositions
 	}
+	
+	function setGameRule(rule) {
+		gameRule = rule
+	} 
 	
 	function addPoints(playerID, points) {
 		var player = players[playerID];
@@ -53,6 +62,8 @@ module.exports = function(name_, orderAscending) {
 		addPlayer: addPlayer,
 		name: name,
 		players: players,
+		gameRule: gameRule,
+		setGameRule: setGameRule,
 		playerIdSittingPosition: playerIdSittingPosition,
 		updateSittingPositions: updateSittingPositions,
 		addPoints: addPoints,
