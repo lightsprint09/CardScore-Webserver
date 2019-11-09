@@ -30,7 +30,7 @@
   },
   "devDependencies": {
 	"babel": "^5.4.7",
-    "mocha": "*"
+    "mocha": "3.x.x"
   },
   "scripts": {
     "test": "mocha --compilers js:babel/register",
